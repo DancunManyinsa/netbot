@@ -1,0 +1,2 @@
+# netbot
+Network monitoring bot.
