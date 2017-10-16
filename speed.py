@@ -2,11 +2,12 @@
 
 
 import json
-import pyspeedtest as pst
 import os
 import time
 from collections import namedtuple
 from datetime import datetime
+
+import pyspeedtest as pst
 
 
 METRICS = ["time", "ping", "upload", "download", "status"]
