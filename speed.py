@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.6
 
 
+import json
 import pyspeedtest as pst
 import os
 import time
@@ -67,7 +68,39 @@ class MetricWriterCSV:
 
     def _format(self, metric):
         metric_str = (str(m) for m in metric)
+
         return ",".join(metric_str)
+
+
+class MetricWriterJSON:
+    def __init__(self, file):
+        self._file = file
+
+        if not os.path.isfile(self._file) or os.stat(self._file).st_size == 0:
+            open(self._file, 'x')
+
+    def write(self, metric):
+        with open(self._file, mode='r+', encoding='utf-8') as f:
+            f.seek(0, os.SEEK_END)
+            pos = f.tell() - 1
+            while pos > 0 and f.read(1) != '}':
+                pos -= 1
+                f.seek(pos, os.SEEK_SET)
+
+            if pos > 0:
+                f.seek(pos, os.SEEK_SET)
+                f.truncate()
+                first_line = "},"
+            else:
+                first_line = "["
+
+            metric_dict = self._format(metric)
+            f.write(first_line+"\n{}\n]"\
+                .format(json.dumps(metric_dict, indent=4)))
+
+    def _format(self, metric):
+        return {metric_name: metric_value for metric_name, metric_value
+                                          in zip(METRICS, metric)}
 
 
 def main():
@@ -76,11 +109,16 @@ def main():
     csv_file = os.path.join(os.path.dirname(__file__), "metrics.csv")
     csv_writer = MetricWriterCSV(csv_file)
 
+    json_file = os.path.join(os.path.dirname(__file__), "metrics.json")
+    json_writer = MetricWriterJSON(json_file)
+
     while True:
         try:
             ping = st.ping()
             upload = st.upload()
             download = st.download()
+        except KeyboardInterrupt:
+            sys.exit(0)
         except Exception:
             ping, upload, download = 0.0, 0.0, 0.0
             is_online = False
@@ -90,6 +128,7 @@ def main():
         metric = Metric(ping, upload, download, is_online)
 
         csv_writer.write(metric)
+        json_writer.write(metric)
         print(metric)
 
         time.sleep(20)
