@@ -18,7 +18,8 @@ $ python netbot.py
 ```
 
 It will automatically create the files `metrics.csv` and `metrics.json` in
-the current directory.
+the current directory if they do not exist yet. Otherwise, it will just append
+the data to them.
 
 ## Developing
 
