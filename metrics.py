@@ -3,11 +3,7 @@
 
 import json
 import os
-import time
-from collections import namedtuple
 from datetime import datetime
-
-import pyspeedtest as pst
 
 
 METRICS = ["time", "ping", "upload", "download", "status"]
@@ -102,38 +98,3 @@ class MetricWriterJSON:
     def _format(self, metric):
         return {metric_name: metric_value for metric_name, metric_value
                                           in zip(METRICS, metric)}
-
-
-def main():
-    st = pst.SpeedTest()
-
-    csv_file = os.path.join(os.path.dirname(__file__), "metrics.csv")
-    csv_writer = MetricWriterCSV(csv_file)
-
-    json_file = os.path.join(os.path.dirname(__file__), "metrics.json")
-    json_writer = MetricWriterJSON(json_file)
-
-    while True:
-        try:
-            ping = st.ping()
-            upload = st.upload()
-            download = st.download()
-        except KeyboardInterrupt:
-            sys.exit(0)
-        except Exception:
-            ping, upload, download = 0.0, 0.0, 0.0
-            is_online = False
-        else:
-            is_online = True
-
-        metric = Metric(ping, upload, download, is_online)
-
-        csv_writer.write(metric)
-        json_writer.write(metric)
-        print(metric)
-
-        time.sleep(20)
-
-
-if __name__ == '__main__':
-    main()
