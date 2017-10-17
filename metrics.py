@@ -38,6 +38,12 @@ class Metric:
         else:
             return "{} - no connection".format(self.time)
 
+    def __repr__(self):
+        return "Metric({}, {}, {}, {})".format(self.ping,
+                                               self.upload,
+                                               self.download,
+                                               self.status_ok)
+
     def __iter__(self):
         yield self.time
         yield self.ping
