@@ -31,6 +31,9 @@ class Metric:
         else:
             pass
 
+    def to_dict(self):
+        return {k: v for k, v in zip(METRICS, self)}
+
     def __str__(self):
         if self.status_ok:
             return "{} - ping: {:.2f} ms, upload: {:.2f} Mbps, download: {:.2f} Mbps"\
