@@ -37,8 +37,6 @@ def main():
         json_writer.write(metric)
         print(metric)
 
-        time.sleep(20)
-
 
 if __name__ == '__main__':
     main()

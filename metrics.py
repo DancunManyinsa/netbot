@@ -16,7 +16,8 @@ class Metric:
         self.upload = upload
         self.download = download
         self.status_ok = status_ok
-        self.time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.time_raw = datetime.now()
+        self.time = self.time_raw.strftime("%Y-%m-%d %H:%M:%S")
 
         self._convert_time_units(unit_time)
         self._convert_bandwitdh_units(unit_bandwidth)
