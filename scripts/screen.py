@@ -15,7 +15,7 @@ def summary(window):
     while True:
         last = int(sys.argv[1]) if len(sys.argv) == 2 else 50
 
-        network = pd.read_csv("metrics.csv")
+        network = pd.read_csv("../data/metrics.csv")
 
         last = min(last, len(network))
 

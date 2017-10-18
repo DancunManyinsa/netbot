@@ -17,7 +17,7 @@ There is no need for installation. Just run the script without arguments:
 $ python netbot.py
 ```
 
-It will automatically create the files `metrics.csv` and `metrics.json` in
+It will automatically create the files `data/metrics.csv` and `data/metrics.json` in
 the current directory if they do not exist yet. Otherwise, it will just append
 the data to them.
 

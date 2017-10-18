@@ -100,5 +100,5 @@ ENV/
 # mypy
 .mypy_cache/
 
-metrics.csv
-metrics.json
+data/*.csv
+data/*.json
