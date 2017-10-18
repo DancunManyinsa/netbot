@@ -2,6 +2,7 @@
 
 
 import curses
+import os
 import time
 import sys
 from datetime import datetime
@@ -11,11 +12,15 @@ import numpy as np
 import pandas as pd
 
 
+def csv_path():
+    return os.path.join(os.path.dirname(__file__), os.path.pardir, "data", "metrics.csv")
+
+
 def summary(window):
     while True:
         last = int(sys.argv[1]) if len(sys.argv) == 2 else 50
 
-        network = pd.read_csv("../data/metrics.csv")
+        network = pd.read_csv(csv_path())
 
         last = min(last, len(network))
 

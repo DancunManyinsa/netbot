@@ -1,17 +1,23 @@
 #!/usr/bin/env python3.6
 
 
+import os
+import sys
 from datetime import datetime
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import sys
 
+
+def csv_path():
+    return os.path.join(os.path.dirname(__file__), os.path.pardir, "data", "metrics.csv")
 
 def main():
     last = int(sys.argv[1]) if len(sys.argv) == 2 else 50
 
-    network = pd.read_csv("../data/metrics.csv")
+    metrics_csv = os.path.join(os.path.dirname(__file__), )
+    network = pd.read_csv(csv_path())
 
     last = min(last, len(network))
 
