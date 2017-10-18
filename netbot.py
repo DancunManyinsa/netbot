@@ -3,6 +3,7 @@
 
 import os
 import time
+import sys
 
 import pyspeedtest as pst
 
@@ -12,10 +13,10 @@ from metrics import Metric, MetricWriterCSV, MetricWriterJSON
 def main():
     st = pst.SpeedTest()
 
-    csv_file = os.path.join(os.path.dirname(__file__), "data/metrics.csv")
+    csv_file = os.path.join(os.path.dirname(__file__), "data", "metrics.csv")
     csv_writer = MetricWriterCSV(csv_file)
 
-    json_file = os.path.join(os.path.dirname(__file__), "data/metrics.json")
+    json_file = os.path.join(os.path.dirname(__file__), "data", "metrics.json")
     json_writer = MetricWriterJSON(json_file)
 
     while True:
